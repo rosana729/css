@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  ACTIVIDAD: CSS DE A POCO
+  =====================================================================
+  Guía 100% enfocada en CSS, con todos los temas más usados:
+  selectores, colores, fuentes, box model, flexbox, grid,
+  posicionamiento, hover, transiciones, animaciones y responsive.
+  =====================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actividad · CSS de a poco</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:           #f5ede0;
+      --bg-alt:       #ede2cf;
+      --ink:          #241c17;
+      --ink-soft:     #5c4a3d;
+      --line:         #241c17;
+      --paper:        #fffaf0;
+
+      /* CSS tiene un color "oficial" azul con líneas blancas */
+      --css-blue:     #1572b6;
+      --css-blue-d:   #0d4f80;
+      --css-pink:     #ec3681;   /* el icono moderno tira a rosa/naranja */
+      --css-orange:   #e44d26;
+
+      --coral:        #e85a2c;
+      --teal:         #2d7a8e;
+      --green:        #3f7a4e;
+      --pink:         #d4628c;
+      --amber:        #e4b829;
+
+      --code-bg:      #1a1410;
+      --code-fg:      #f5e6d3;
+
+      --font-display: 'Fraunces', 'Georgia', serif;
+      --font-body:    'Manrope', system-ui, sans-serif;
+      --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+
+      --shadow-hard:  4px 4px 0 var(--line);
+      --radius:       14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(36,28,23,0.05) 1px, transparent 0);
+      background-size: 18px 18px;
+    }
+
+    /* ============= HEADER ============= */
+    .top-bar {
+      padding: 22px 6vw;
+      border-bottom: 2px solid var(--line);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(6px);
+    }
+
+    .top-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand__tag {
+      background: var(--css-blue);
+      color: white;
+      padding: 4px 10px;
+      border: 2px solid var(--line);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      font-family: var(--font-mono);
+    }
+
+    .nav a:hover {
+      background: var(--css-blue);
+      color: white;
+    }
+
+    /* ============= HERO ============= */
+    .hero {
+      padding: 60px 6vw 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero__badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 2px solid var(--line);
+      border-radius: 6px;
+      background: var(--css-blue);
+      color: white;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 5.5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0 0 18px;
+    }
+
+    .hero h1 em {
+      color: var(--css-blue);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero h1 .highlight {
+      color: var(--css-pink);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero__lead {
+      font-size: 1.08rem;
+      max-width: 720px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* Tabla de contenidos */
+    .toc {
+      margin-top: 30px;
+      padding: 22px 26px;
+      background: var(--paper);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .toc h3 {
+      font-family: var(--font-display);
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 26px;
+      columns: 2;
+      gap: 30px;
+    }
+
+    @media (max-width: 720px) {
+      .toc ol { columns: 1; }
+    }
+
+    .toc li {
+      margin: 6px 0;
+      font-weight: 600;
+      break-inside: avoid;
+    }
+
+    .toc li small {
+      display: block;
+      font-weight: 400;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+    }
+
+    /* ============= STAGE (cada tema) ============= */
+    .stage {
+      padding: 50px 6vw;
+      border-top: 2px dashed var(--line);
+    }
+
+    .stage--tinted { background: var(--bg-alt); }
+
+    .stage__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stage-number {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 3rem;
+      line-height: 1;
+      color: white;
+      letter-spacing: -0.04em;
+      background: var(--css-blue);
+      padding: 12px 24px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow-hard);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .stage-meta__title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .stage-meta__sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin: 4px 0 0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============= INFO BOX ============= */
+    .info-box {
+      background: var(--paper);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      box-shadow: var(--shadow-hard);
+      margin: 14px 0;
+    }
+
+    .info-box h3 {
+      font-family: var(--font-display);
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .info-box h3:not(:first-child) { margin-top: 20px; }
+    .info-box p { margin: 8px 0; }
+    .info-box ul, .info-box ol { padding-left: 22px; margin: 8px 0; }
+    .info-box li { margin: 5px 0; }
+
+    .info-box code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      background: var(--bg-alt);
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid rgba(36,28,23,0.15);
+    }
+
+    /* ============= BLOQUES DE CÓDIGO ============= */
+    .code-wrap { position: relative; }
+
+    .code {
+      background: var(--code-bg);
+      color: var(--code-fg);
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.65;
+      padding: 24px;
+      padding-top: 32px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow-hard);
+      margin: 14px 0;
+      position: relative;
+    }
+
+    .code::before {
+      content: attr(data-file);
+      position: absolute;
+      top: 0;
+      left: 14px;
+      background: var(--css-blue);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 0 0 6px 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .code pre { margin: 0; white-space: pre; }
+
+    .k { color: #ff9d7a; font-weight: 700; }
+    .s { color: #f7c983; }
+    .c { color: #a89989; font-style: italic; }
+    .t { color: #8fd4b4; }
+    .a { color: #b5a6ff; }
+    .n { color: #ffd86b; }
+    .sel { color: #f7a8c4; font-weight: 700; }   /* selectores */
+
+    /* ============= DEMO BOX ============= */
+    .demo-box {
+      background: var(--paper);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-hard);
+      margin: 14px 0;
+    }
+
+    .demo-box::before {
+      content: "🎨 Mirá el resultado:";
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+
+    .demo-box.demo-box--vivo::before {
+      content: "🎯 Probalo en vivo:";
+    }
+
+    /* ============= TIPS ============= */
+    .tip {
+      margin: 14px 0;
+      padding: 14px 18px;
+      background: #e7f0f7;
+      border: 2px solid var(--line);
+      border-left: 6px solid var(--css-blue);
+      border-radius: 8px;
+      font-size: 0.93rem;
+    }
+
+    .tip--warn { background: #fff1e0; border-left-color: var(--coral); }
+    .tip--ok   { background: #e3f1d9; border-left-color: var(--green); }
+
+    .tip strong { font-family: var(--font-display); }
+    .tip code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: rgba(255,255,255,0.6);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* ============= EJERCICIOS ============= */
+    .exercise {
+      background: #fff6db;
+      border: 2px solid var(--line);
+      border-left: 8px solid var(--amber);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 14px 0;
+    }
+
+    .exercise h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin: 0 0 8px;
+    }
+
+    .exercise p { margin: 6px 0; font-size: 0.94rem; }
+    .exercise ul { padding-left: 22px; margin: 6px 0; }
+
+    /* ============= FOOTER ============= */
+    .site-footer {
+      padding: 40px 6vw;
+      border-top: 2px solid var(--line);
+      background: var(--ink);
+      color: var(--bg);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    /* ============= CHECKLIST ============= */
+    .checklist {
+      background: var(--css-blue);
+      color: white;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      box-shadow: var(--shadow-hard);
+      margin: 20px 0;
+    }
+
+    .checklist h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin: 0 0 14px;
+    }
+
+    .checklist ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .checklist li {
+      padding: 9px 14px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.93rem;
+    }
+
+    .checklist li::before {
+      content: "☐";
+      font-size: 1.3rem;
+    }
+
+    /* ====================================================
+       DEMOS ESPECÍFICOS DE CADA PARTE
+       ==================================================== */
+
+    /* PARTE 2: Selectores */
+    .demo-selectores h3 { color: var(--css-blue); }
+    .demo-selectores p { color: var(--ink-soft); }
+    .demo-selectores .destacado { background: #fff6db; padding: 4px 10px; border-radius: 4px; font-weight: 700; }
+    .demo-selectores #unico { color: var(--coral); font-weight: 700; }
+
+    /* PARTE 3: Colores */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .swatch {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 2px 2px 0 var(--line);
+    }
+    .swatch__color { height: 60px; }
+    .swatch__info { padding: 8px 10px; background: white; font-family: var(--font-mono); font-size: 0.78rem; }
+    .swatch__info strong { display: block; }
+
+    /* PARTE 4: Texto */
+    .demo-texto p { padding: 8px; background: var(--bg-alt); border-radius: 6px; margin: 6px 0; }
+    .texto-grande { font-size: 26px; }
+    .texto-bold { font-weight: 800; }
+    .texto-italic { font-style: italic; }
+    .texto-mono { font-family: monospace; }
+    .texto-color { color: var(--css-pink); }
+    .texto-spaced { letter-spacing: 4px; }
+    .texto-tachado { text-decoration: line-through; }
+
+    /* PARTE 5: Box model */
+    .demo-box-model {
+      background: #cfe2ff;
+      padding: 20px;             /* relleno interno */
+      margin: 0;
+      border: 5px solid var(--css-blue);
+      max-width: 280px;
+    }
+    .demo-margin {
+      background: var(--bg-alt);
+      padding: 10px;
+      border: 2px dashed var(--ink);
+    }
+
+    /* PARTE 6: Flexbox */
+    .demo-flex {
+      display: flex;
+      gap: 10px;
+      background: var(--bg-alt);
+      padding: 14px;
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    .demo-flex--center { justify-content: center; }
+    .demo-flex--space  { justify-content: space-between; }
+    .demo-flex--column { flex-direction: column; }
+    .demo-flex .caja {
+      background: var(--css-blue);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* PARTE 7: Grid */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: var(--bg-alt);
+      padding: 14px;
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+    }
+    .demo-grid div {
+      background: var(--green);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* PARTE 8: Hover y transiciones */
+    .demo-tarjeta {
+      background: white;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    .demo-tarjeta:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 6px 6px 0 var(--coral);
+      background: #fff6db;
+    }
+
+    .demo-btn-fancy {
+      background: var(--css-blue);
+      color: white;
+      padding: 14px 28px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .demo-btn-fancy:hover {
+      background: var(--css-pink);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--line);
+      letter-spacing: 2px;
+    }
+
+    /* PARTE 9: Animaciones */
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-15px); }
+    }
+
+    @keyframes girar {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes latir {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.2); }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .anim-flota {
+      width: 60px; height: 60px;
+      background: var(--coral);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      animation: flotar 2s ease-in-out infinite;
+    }
+
+    .anim-gira {
+      width: 60px; height: 60px;
+      background: var(--amber);
+      border: 2px solid var(--line);
+      animation: girar 3s linear infinite;
+    }
+
+    .anim-late {
+      width: 60px; height: 60px;
+      background: var(--pink);
+      border: 2px solid var(--line);
+      border-radius: 50%;
+      animation: latir 1s ease-in-out infinite;
+    }
+
+    .demos-anim {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .demos-anim figure {
+      margin: 0;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .demos-anim figcaption { margin-top: 8px; }
+
+    /* PARTE 10: Responsive */
+    .demo-responsive {
+      background: var(--bg-alt);
+      padding: 14px;
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+    }
+    .demo-responsive__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .demo-responsive__grid div {
+      background: var(--teal);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    @media (max-width: 700px) {
+      .demo-responsive__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Bloque visual: HTML + CSS lado a lado */
+    .duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .duo { grid-template-columns: 1fr; }
+    }
+
+    .btn-copy {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      background: rgba(245,230,211,0.15);
+      color: var(--code-fg);
+      border: 1px solid rgba(245,230,211,0.3);
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .btn-copy:hover { background: rgba(245,230,211,0.3); }
+    .btn-copy.ok { background: var(--green); color: white; }
+  </style>
+</head>
+
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar__inner">
+      <div class="brand">
+        <span class="brand__tag">Actividad</span>
+        CSS de a poco
+      </div>
+      <nav class="nav">
+        <a href="#parte1">1. Conexión</a>
+        <a href="#parte2">2. Selectores</a>
+        <a href="#parte3">3. Colores</a>
+        <a href="#parte4">4. Texto</a>
+        <a href="#parte5">5. Box Model</a>
+        <a href="#parte6">6. Flexbox</a>
+        <a href="#parte7">7. Grid</a>
+        <a href="#parte8">8. Hover</a>
+        <a href="#parte9">9. Anim.</a>
+        <a href="#parte10">10. Responsive</a>
+        <a href="#entrega">Entrega</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =================================================================
+         HERO
+    ====================================================================== -->
+    <section class="hero">
+      <span class="hero__badge">🎨 CSS paso a paso</span>
+      <h1>CSS: la <em>ropa</em> y la <span class="highlight">decoración</span> de tus páginas web.</h1>
+      <p class="hero__lead">
+        Esta guía es 100% práctica. En cada tema vas a encontrar una explicación corta,
+        un ejemplo que <strong>se ve aplicado en la página</strong>, el código para copiar y un ejercicio para hacer.
+        Vas a aprender lo más usado del día a día: selectores, colores, fuentes,
+        cajas, layouts con flexbox y grid, hover, transiciones, animaciones y diseño responsive.
+      </p>
+
+      <div class="toc">
+        <h3>📚 Lo que vas a aprender</h3>
+        <ol>
+          <li>Cómo conectar CSS a tu HTML <small>la base de todo</small></li>
+          <li>Selectores: a quién le hablás <small>etiquetas, clases, id, hijos</small></li>
+          <li>Colores y fondos <small>HEX, RGB, gradientes</small></li>
+          <li>Texto y tipografía <small>tamaño, peso, fuente, alineación</small></li>
+          <li>Box Model: las cajas <small>margin, padding, border</small></li>
+          <li>Flexbox: alinear en una línea <small>el más usado</small></li>
+          <li>Grid: layouts en cuadrícula <small>para diseños complejos</small></li>
+          <li>Hover y transiciones <small>efectos al pasar el mouse</small></li>
+          <li>Animaciones con keyframes <small>movimiento real</small></li>
+          <li>Responsive: que se vea bien en celular <small>media queries</small></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 1: Conectar CSS a HTML
+    ====================================================================== -->
+    <section id="parte1" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">1</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Conectar CSS a tu HTML</h2>
+            <p class="stage-meta__sub">Lo primero de lo primero · 10 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🤔 ¿Cómo "habla" el HTML con el CSS?</h3>
+          <p>Hay <strong>tres maneras</strong> de meter CSS en tu HTML:</p>
+          <p><strong>1. Inline (en el atributo style):</strong> rápido pero feo, no se reutiliza.</p>
+          <p><strong>2. Interno (dentro de &lt;style&gt;):</strong> útil para pruebas, todo en un archivo.</p>
+          <p><strong>3. Externo (recomendado):</strong> creás un archivo <code>.css</code> y lo conectás con <code>&lt;link&gt;</code>.</p>
+        </div>
+
+        <div class="code" data-file="index.html">
+<pre><span class="k">&lt;!DOCTYPE html&gt;</span>
+<span class="k">&lt;html&gt;</span>
+<span class="k">&lt;head&gt;</span>
+  <span class="c">&lt;!-- Forma 3: archivo externo (LO QUE SE USA) --&gt;</span>
+  <span class="k">&lt;link</span> <span class="a">rel</span>=<span class="s">"stylesheet"</span> <span class="a">href</span>=<span class="s">"estilos.css"</span><span class="k">&gt;</span>
+
+  <span class="c">&lt;!-- Forma 2: interno --&gt;</span>
+  <span class="k">&lt;style&gt;</span>
+    <span class="sel">h1</span> { <span class="t">color</span>: red; }
+  <span class="k">&lt;/style&gt;</span>
+<span class="k">&lt;/head&gt;</span>
+<span class="k">&lt;body&gt;</span>
+
+  <span class="c">&lt;!-- Forma 1: inline (NO se recomienda) --&gt;</span>
+  <span class="k">&lt;h1</span> <span class="a">style</span>=<span class="s">"color: red;"</span><span class="k">&gt;</span>Hola<span class="k">&lt;/h1&gt;</span>
+
+<span class="k">&lt;/body&gt;</span>
+<span class="k">&lt;/html&gt;</span></pre>
+        </div>
+
+        <div class="info-box">
+          <h3>📝 La estructura de una regla CSS</h3>
+          <p>Toda regla de CSS tiene 3 partes:</p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">h1</span> {                       <span class="c">/* ← selector: a quién le hablo */</span>
+  <span class="t">color</span>: blue;            <span class="c">/* ← propiedad: valor; */</span>
+  <span class="t">font-size</span>: <span class="n">32px</span>;
+  <span class="t">text-align</span>: center;
+}                          <span class="c">/* ← cierre con } */</span></pre>
+        </div>
+
+        <div class="tip tip--warn">
+          <strong>⚠️ Cosas que se olvidan mucho:</strong>
+          <ul style="margin: 6px 0 0;">
+            <li>Cada propiedad termina con punto y coma <code>;</code></li>
+            <li>Las llaves <code>{ }</code> son obligatorias.</li>
+            <li>Los textos sin comillas (excepto cuando son <code>font-family</code> con espacios).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 2: Selectores
+    ====================================================================== -->
+    <section id="parte2" class="stage stage--tinted">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">2</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Selectores: a quién le estás hablando</h2>
+            <p class="stage-meta__sub">El concepto más importante de CSS · 30 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 Las 4 formas más usadas de seleccionar</h3>
+          <ul>
+            <li><strong>Por etiqueta</strong>: <code>p { ... }</code> → todos los <code>&lt;p&gt;</code> de la página.</li>
+            <li><strong>Por clase</strong>: <code>.destacado { ... }</code> → todos los que tengan <code>class="destacado"</code>.</li>
+            <li><strong>Por id</strong>: <code>#unico { ... }</code> → el ÚNICO elemento con <code>id="unico"</code>.</li>
+            <li><strong>Combinados</strong>: <code>article p { ... }</code> → los <code>&lt;p&gt;</code> que están dentro de un <code>&lt;article&gt;</code>.</li>
+          </ul>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* Por ETIQUETA: afecta a TODOS los párrafos */</span>
+<span class="sel">p</span> {
+  <span class="t">color</span>: gray;
+  <span class="t">font-size</span>: <span class="n">16px</span>;
+}
+
+<span class="c">/* Por CLASE: solo a los que tengan class="destacado" */</span>
+<span class="sel">.destacado</span> {
+  <span class="t">background</span>: yellow;
+  <span class="t">font-weight</span>: bold;
+}
+
+<span class="c">/* Por ID: solo al elemento con id="unico" */</span>
+<span class="sel">#unico</span> {
+  <span class="t">color</span>: red;
+  <span class="t">text-transform</span>: uppercase;
+}
+
+<span class="c">/* COMBINADO: párrafos DENTRO de article */</span>
+<span class="sel">article p</span> {
+  <span class="t">font-style</span>: italic;
+}
+
+<span class="c">/* Varios a la vez (separados por coma) */</span>
+<span class="sel">h1, h2, h3</span> {
+  <span class="t">color</span>: navy;
+}</pre>
+        </div>
+
+        <div class="demo-box demo-selectores">
+          <h3>Soy un h3 (afectado por etiqueta)</h3>
+          <p>Soy un párrafo común, color gris.</p>
+          <p>Otro párrafo igual.</p>
+          <p class="destacado">Yo tengo <code>class="destacado"</code> → fondo amarillo.</p>
+          <p id="unico">Yo tengo <code>id="unico"</code> → en mayúsculas.</p>
+        </div>
+
+        <div class="info-box">
+          <h3>🆔 ¿Cuándo usar clase y cuándo id?</h3>
+          <ul>
+            <li><strong>Clase</strong> (<code>.</code>): para estilos que se REPITEN. Ejemplo: <code>.boton</code>, <code>.tarjeta</code>, <code>.titulo-grande</code>.</li>
+            <li><strong>ID</strong> (<code>#</code>): para algo ÚNICO en la página. Ejemplo: <code>#header-principal</code>, <code>#carrito</code>.</li>
+          </ul>
+          <p>En el día a día se usan muchísimo más las clases que los ids.</p>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 2.1</h4>
+          <p>Crear un HTML con 3 párrafos. Que el primero sea de color azul (por etiqueta), el segundo tenga fondo amarillo (por clase <code>.amarillo</code>) y el tercero esté en mayúsculas (por id <code>#mayus</code>).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 3: Colores y fondos
+    ====================================================================== -->
+    <section id="parte3" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">3</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Colores y fondos</h2>
+            <p class="stage-meta__sub">El alma visual de tu sitio · 30 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎨 Las 4 formas de escribir un color</h3>
+          <ul>
+            <li><strong>Nombre</strong>: <code>red</code>, <code>blue</code>, <code>tomato</code>... (hay 140 nombres).</li>
+            <li><strong>HEX</strong>: <code>#ff5733</code> → la más común en proyectos reales.</li>
+            <li><strong>RGB</strong>: <code>rgb(255, 87, 51)</code> → cada número va de 0 a 255.</li>
+            <li><strong>RGBA</strong>: <code>rgba(255, 87, 51, 0.5)</code> → igual pero con transparencia (0 a 1).</li>
+          </ul>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.titulo</span>     { <span class="t">color</span>: red; }
+<span class="sel">.subtitulo</span>  { <span class="t">color</span>: <span class="s">#ff5733</span>; }
+<span class="sel">.parrafo</span>    { <span class="t">color</span>: <span class="t">rgb</span>(<span class="n">100</span>, <span class="n">100</span>, <span class="n">100</span>); }
+<span class="sel">.transparente</span> { <span class="t">color</span>: <span class="t">rgba</span>(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0.5</span>); }
+
+<span class="c">/* Color de fondo */</span>
+<span class="sel">body</span> {
+  <span class="t">background-color</span>: <span class="s">#f5ede0</span>;
+}
+
+<span class="c">/* Imagen de fondo */</span>
+<span class="sel">.hero</span> {
+  <span class="t">background-image</span>: <span class="t">url</span>(<span class="s">"foto.jpg"</span>);
+  <span class="t">background-size</span>: cover;       <span class="c">/* que cubra todo */</span>
+  <span class="t">background-position</span>: center;  <span class="c">/* centrada */</span>
+}
+
+<span class="c">/* DEGRADADO (gradiente) - muy de moda */</span>
+<span class="sel">.gradiente</span> {
+  <span class="t">background</span>: <span class="t">linear-gradient</span>(<span class="n">45deg</span>, <span class="s">#ff5733</span>, <span class="s">#1572b6</span>);
+}</pre>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 12px;">Ejemplos de colores escritos de distintas formas:</p>
+          <div class="swatch-grid">
+            <div class="swatch">
+              <div class="swatch__color" style="background: tomato;"></div>
+              <div class="swatch__info"><strong>tomato</strong>nombre</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background: #1572b6;"></div>
+              <div class="swatch__info"><strong>#1572b6</strong>HEX</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background: rgb(60, 180, 75);"></div>
+              <div class="swatch__info"><strong>rgb(60,180,75)</strong>RGB</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background: rgba(0,0,0,0.5);"></div>
+              <div class="swatch__info"><strong>rgba(0,0,0,0.5)</strong>RGBA</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background: linear-gradient(45deg, #e85a2c, #1572b6);"></div>
+              <div class="swatch__info"><strong>linear-gradient</strong>degradado</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__color" style="background: linear-gradient(135deg, #f0c419, #d4628c);"></div>
+              <div class="swatch__info"><strong>otro gradiente</strong>amarillo→rosa</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <strong>💡 Tip pro:</strong> usá <strong>coolors.co</strong> o <strong>colorhunt.co</strong> para encontrar paletas listas. Después copiás los HEX y los pegás en tu CSS.
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 3.1</h4>
+          <p>Crear una sección con un degradado de fondo (los dos colores que más te gusten) y un texto blanco grande encima. Que el degradado vaya en diagonal (45deg).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 4: Texto y tipografía
+    ====================================================================== -->
+    <section id="parte4" class="stage stage--tinted">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">4</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Texto y tipografía</h2>
+            <p class="stage-meta__sub">Cómo se ve cada letra · 30 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🔤 Las propiedades de texto que más vas a usar</h3>
+          <ul>
+            <li><code>font-size</code> → tamaño de letra (<code>16px</code>, <code>1.2rem</code>, <code>2em</code>).</li>
+            <li><code>font-weight</code> → grosor: <code>normal</code>, <code>bold</code>, o de <code>100</code> a <code>900</code>.</li>
+            <li><code>font-style</code> → <code>italic</code> para cursiva.</li>
+            <li><code>font-family</code> → la fuente: <code>"Arial"</code>, <code>"Georgia"</code>, etc.</li>
+            <li><code>color</code> → color del texto.</li>
+            <li><code>text-align</code> → <code>left</code>, <code>center</code>, <code>right</code>, <code>justify</code>.</li>
+            <li><code>text-decoration</code> → <code>underline</code>, <code>line-through</code>, <code>none</code>.</li>
+            <li><code>text-transform</code> → <code>uppercase</code>, <code>lowercase</code>, <code>capitalize</code>.</li>
+            <li><code>letter-spacing</code> → espacio entre letras.</li>
+            <li><code>line-height</code> → altura de línea (interlineado).</li>
+          </ul>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">h1</span> {
+  <span class="t">font-family</span>: <span class="s">'Georgia'</span>, serif;
+  <span class="t">font-size</span>: <span class="n">42px</span>;
+  <span class="t">font-weight</span>: <span class="n">800</span>;
+  <span class="t">color</span>: <span class="s">#1572b6</span>;
+  <span class="t">text-align</span>: center;
+  <span class="t">letter-spacing</span>: <span class="n">-1px</span>;
+  <span class="t">line-height</span>: <span class="n">1.1</span>;
+}
+
+<span class="sel">.subtitulo</span> {
+  <span class="t">font-style</span>: italic;
+  <span class="t">text-transform</span>: uppercase;
+  <span class="t">letter-spacing</span>: <span class="n">3px</span>;
+}
+
+<span class="sel">.tachado</span> {
+  <span class="t">text-decoration</span>: line-through;
+  <span class="t">color</span>: gray;
+}</pre>
+        </div>
+
+        <div class="demo-box demo-texto">
+          <p>Texto normal sin nada.</p>
+          <p class="texto-grande">Texto con <code>font-size: 26px</code></p>
+          <p class="texto-bold">Texto con <code>font-weight: 800</code></p>
+          <p class="texto-italic">Texto con <code>font-style: italic</code></p>
+          <p class="texto-mono">Texto con <code>font-family: monospace</code></p>
+          <p class="texto-color">Texto con <code>color: rosa</code></p>
+          <p class="texto-spaced">Texto con letter-spacing</p>
+          <p class="texto-tachado">Texto con line-through</p>
+        </div>
+
+        <div class="info-box">
+          <h3>🌐 Usar Google Fonts (fuentes gratis y profesionales)</h3>
+          <p>En el <code>&lt;head&gt;</code> de tu HTML pegás esto:</p>
+        </div>
+
+        <div class="code" data-file="index.html">
+<pre><span class="k">&lt;link</span> <span class="a">href</span>=<span class="s">"https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&amp;display=swap"</span>
+      <span class="a">rel</span>=<span class="s">"stylesheet"</span><span class="k">&gt;</span></pre>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">body</span> {
+  <span class="t">font-family</span>: <span class="s">'Poppins'</span>, sans-serif;
+}</pre>
+        </div>
+
+        <div class="tip">
+          <strong>💡 Cómo usar Google Fonts paso a paso:</strong>
+          <ol style="margin: 6px 0 0;">
+            <li>Andá a <strong>fonts.google.com</strong></li>
+            <li>Buscá una fuente que te guste (ej: Poppins, Roboto, Lobster).</li>
+            <li>Apretá "Get font" → "Get embed code" → copiá las dos líneas que te da.</li>
+            <li>Pegalas en tu HTML y CSS como en el ejemplo.</li>
+          </ol>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 4.1</h4>
+          <p>Elegir una fuente de Google Fonts que te guste y aplicarla a todo el body. Hacer que los <code>h1</code> sean en otra fuente diferente, también de Google.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 5: Box Model
+    ====================================================================== -->
+    <section id="parte5" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">5</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Box Model: las cajas de CSS</h2>
+            <p class="stage-meta__sub">El concepto que confunde a todos · 45 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>📦 En CSS todo es una caja</h3>
+          <p>Cada elemento HTML es una "caja" con 4 capas concéntricas:</p>
+          <ul>
+            <li><code>content</code> → el contenido (texto, imagen).</li>
+            <li><code>padding</code> → el ESPACIO INTERNO (entre el contenido y el borde).</li>
+            <li><code>border</code> → el BORDE de la caja.</li>
+            <li><code>margin</code> → el ESPACIO EXTERNO (entre la caja y otras).</li>
+          </ul>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.tarjeta</span> {
+  <span class="t">width</span>: <span class="n">300px</span>;             <span class="c">/* ancho */</span>
+  <span class="t">height</span>: <span class="n">200px</span>;            <span class="c">/* alto */</span>
+
+  <span class="t">padding</span>: <span class="n">20px</span>;            <span class="c">/* interno: 20px en los 4 lados */</span>
+  <span class="t">border</span>: <span class="n">3px</span> solid blue;  <span class="c">/* grosor estilo color */</span>
+  <span class="t">margin</span>: <span class="n">15px</span>;             <span class="c">/* externo: 15px en los 4 lados */</span>
+
+  <span class="t">border-radius</span>: <span class="n">12px</span>;      <span class="c">/* esquinas redondeadas */</span>
+  <span class="t">background</span>: white;
+}
+
+<span class="c">/* También se puede especificar por lado: */</span>
+<span class="sel">.otra</span> {
+  <span class="t">padding-top</span>: <span class="n">10px</span>;
+  <span class="t">padding-right</span>: <span class="n">20px</span>;
+  <span class="t">padding-bottom</span>: <span class="n">10px</span>;
+  <span class="t">padding-left</span>: <span class="n">20px</span>;
+
+  <span class="c">/* O todo en una línea: arriba derecha abajo izquierda */</span>
+  <span class="t">padding</span>: <span class="n">10px 20px 10px 20px</span>;
+
+  <span class="c">/* O incluso más corto: arriba/abajo izquierda/derecha */</span>
+  <span class="t">padding</span>: <span class="n">10px 20px</span>;
+}</pre>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 12px; font-size: 0.9rem;">
+            Esta caja tiene <code>padding: 20px</code> (espacio interno) y <code>border: 5px solid azul</code>:
+          </p>
+          <div class="demo-box-model">
+            🟦 Soy el contenido. Mirá cómo el borde está separado de mí por el padding.
+          </div>
+        </div>
+
+        <div class="tip tip--warn">
+          <strong>⚠️ Truco que cambia todo:</strong> agregá esto al inicio de tu CSS:
+          <div style="margin-top: 8px;">
+            <code>* { box-sizing: border-box; }</code>
+          </div>
+          Esto hace que cuando ponés <code>width: 300px</code>, esos 300px <strong>incluyan</strong> el padding y border. Sin esto, el ancho real es <code>width + padding + border</code>, que es un dolor de cabeza.
+        </div>
+
+        <div class="info-box">
+          <h3>📐 Bordes y esquinas</h3>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.caja-1</span> { <span class="t">border</span>: <span class="n">2px</span> solid black; }
+<span class="sel">.caja-2</span> { <span class="t">border</span>: <span class="n">3px</span> dashed red; }
+<span class="sel">.caja-3</span> { <span class="t">border</span>: <span class="n">4px</span> dotted blue; }
+<span class="sel">.caja-4</span> { <span class="t">border</span>: <span class="n">5px</span> double green; }
+
+<span class="sel">.redonda</span>     { <span class="t">border-radius</span>: <span class="n">50%</span>; }    <span class="c">/* círculo */</span>
+<span class="sel">.suavizada</span>   { <span class="t">border-radius</span>: <span class="n">12px</span>; }   <span class="c">/* esquinas suaves */</span>
+<span class="sel">.una-esquina</span> { <span class="t">border-top-left-radius</span>: <span class="n">30px</span>; }</pre>
+        </div>
+
+        <div class="demo-box">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div style="width: 80px; height: 80px; background: var(--bg-alt); border: 2px solid black;"></div>
+            <div style="width: 80px; height: 80px; background: var(--bg-alt); border: 3px dashed red;"></div>
+            <div style="width: 80px; height: 80px; background: var(--bg-alt); border: 4px dotted blue;"></div>
+            <div style="width: 80px; height: 80px; background: var(--bg-alt); border: 5px double green;"></div>
+            <div style="width: 80px; height: 80px; background: var(--coral); border: 2px solid black; border-radius: 50%;"></div>
+            <div style="width: 80px; height: 80px; background: var(--amber); border: 2px solid black; border-radius: 12px;"></div>
+            <div style="width: 80px; height: 80px; background: var(--green); border: 2px solid black; border-top-left-radius: 30px;"></div>
+          </div>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 5.1</h4>
+          <p>Crear una "tarjeta" con: ancho 300px, padding 20px, border de 2px sólido negro, border-radius 12px, fondo blanco y un margin de 20px. Adentro poné un título y un párrafo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 6: Flexbox
+    ====================================================================== -->
+    <section id="parte6" class="stage stage--tinted">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">6</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Flexbox: alinear cosas en una línea</h2>
+            <p class="stage-meta__sub">El sistema más usado para layouts · 1 hora</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 Para qué sirve Flexbox</h3>
+          <p>
+            Cuando necesitás <strong>poner cosas una al lado de la otra</strong> (o una arriba de la otra)
+            y controlar cómo se alinean, Flexbox es la herramienta. Es el sistema más usado del CSS moderno.
+          </p>
+          <p>El secreto es: ponés <code>display: flex</code> en el <strong>contenedor</strong>, y los hijos
+          se ordenan automáticamente.</p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.contenedor</span> {
+  <span class="t">display</span>: flex;                     <span class="c">/* ← la clave */</span>
+  <span class="t">gap</span>: <span class="n">10px</span>;                        <span class="c">/* espacio entre hijos */</span>
+
+  <span class="t">justify-content</span>: center;           <span class="c">/* eje horizontal */</span>
+  <span class="t">align-items</span>: center;               <span class="c">/* eje vertical */</span>
+  <span class="t">flex-direction</span>: row;               <span class="c">/* row | column */</span>
+}</pre>
+        </div>
+
+        <div class="info-box">
+          <h3>📐 Los valores más útiles de <code>justify-content</code></h3>
+          <ul>
+            <li><code>flex-start</code> → todo al inicio (por defecto).</li>
+            <li><code>flex-end</code> → todo al final.</li>
+            <li><code>center</code> → todo al centro.</li>
+            <li><code>space-between</code> → primero al inicio, último al final, los del medio repartidos.</li>
+            <li><code>space-around</code> → con espacios iguales alrededor.</li>
+            <li><code>space-evenly</code> → con espacios EXACTAMENTE iguales.</li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 6px; font-size: 0.85rem;"><strong>Default</strong> (<code>display: flex</code>):</p>
+          <div class="demo-flex">
+            <div class="caja">A</div>
+            <div class="caja">B</div>
+            <div class="caja">C</div>
+          </div>
+
+          <p style="margin: 14px 0 6px; font-size: 0.85rem;"><strong>Centrado</strong> (<code>justify-content: center</code>):</p>
+          <div class="demo-flex demo-flex--center">
+            <div class="caja">A</div>
+            <div class="caja">B</div>
+            <div class="caja">C</div>
+          </div>
+
+          <p style="margin: 14px 0 6px; font-size: 0.85rem;"><strong>Repartido</strong> (<code>justify-content: space-between</code>):</p>
+          <div class="demo-flex demo-flex--space">
+            <div class="caja">A</div>
+            <div class="caja">B</div>
+            <div class="caja">C</div>
+          </div>
+
+          <p style="margin: 14px 0 6px; font-size: 0.85rem;"><strong>En columna</strong> (<code>flex-direction: column</code>):</p>
+          <div class="demo-flex demo-flex--column">
+            <div class="caja">A</div>
+            <div class="caja">B</div>
+            <div class="caja">C</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 El centrado perfecto (vertical y horizontal)</h3>
+          <p>Esta combinación es ORO PURO. Cualquier elemento queda perfectamente centrado:</p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.contenedor</span> {
+  <span class="t">display</span>: flex;
+  <span class="t">justify-content</span>: center;
+  <span class="t">align-items</span>: center;
+  <span class="t">height</span>: <span class="n">300px</span>;
+}</pre>
+        </div>
+
+        <div class="tip">
+          <strong>🎮 Para practicar Flexbox:</strong> jugá a <strong>flexboxfroggy.com</strong>. Es un juego donde tenés que mover ranas con CSS. En 30 minutos te sale.
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 6.1 · Menú de navegación</h4>
+          <p>Crear un menú con un logo a la izquierda y 4 enlaces a la derecha, todos en una sola línea, alineados verticalmente al medio. Usar Flexbox con <code>justify-content: space-between</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 7: Grid
+    ====================================================================== -->
+    <section id="parte7" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">7</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Grid: layouts en cuadrícula</h2>
+            <p class="stage-meta__sub">El sistema para diseños complejos · 45 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 Cuándo usar Grid en lugar de Flexbox</h3>
+          <p>
+            <strong>Flexbox</strong> sirve para una dimensión (una línea o una columna).
+            <strong>Grid</strong> sirve para dos dimensiones (filas Y columnas a la vez).
+            Es perfecto para galerías, tableros y layouts de página.
+          </p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.galeria</span> {
+  <span class="t">display</span>: grid;
+  <span class="t">grid-template-columns</span>: <span class="t">repeat</span>(<span class="n">3</span>, <span class="n">1fr</span>);  <span class="c">/* 3 columnas iguales */</span>
+  <span class="t">gap</span>: <span class="n">15px</span>;                                  <span class="c">/* espacio entre celdas */</span>
+}
+
+<span class="c">/* Otras formas de definir columnas: */</span>
+<span class="sel">.layout-1</span> { <span class="t">grid-template-columns</span>: <span class="n">200px 1fr</span>; }       <span class="c">/* fija + flexible */</span>
+<span class="sel">.layout-2</span> { <span class="t">grid-template-columns</span>: <span class="n">1fr 2fr 1fr</span>; }      <span class="c">/* proporcional */</span>
+<span class="sel">.layout-3</span> { <span class="t">grid-template-columns</span>: <span class="t">repeat</span>(<span class="n">4</span>, <span class="n">1fr</span>); }   <span class="c">/* 4 columnas */</span></pre>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 6px; font-size: 0.85rem;"><strong>3 columnas iguales</strong> (<code>grid-template-columns: repeat(3, 1fr)</code>):</p>
+          <div class="demo-grid">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>✨ Grid responsive automático</h3>
+          <p>Esta receta hace que las columnas se adapten solas según el ancho disponible. Indispensable para galerías:</p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.galeria-auto</span> {
+  <span class="t">display</span>: grid;
+  <span class="t">grid-template-columns</span>: <span class="t">repeat</span>(<span class="t">auto-fit</span>, <span class="t">minmax</span>(<span class="n">200px</span>, <span class="n">1fr</span>));
+  <span class="t">gap</span>: <span class="n">15px</span>;
+}
+
+<span class="c">/* Significa: tantas columnas como entren, con un mínimo de 200px y un máximo flexible */</span></pre>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 7.1 · Galería</h4>
+          <p>Crear una galería con 6 imágenes (o cajas de colores) en una grilla de 3 columnas. Probar también la versión <code>auto-fit</code> y achicá la ventana del navegador para ver cómo se reordenan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 8: Hover y transiciones
+    ====================================================================== -->
+    <section id="parte8" class="stage stage--tinted">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">8</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Hover y transiciones</h2>
+            <p class="stage-meta__sub">Efectos al pasar el mouse · 30 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🖱️ El pseudo-selector <code>:hover</code></h3>
+          <p>
+            Le agregás <code>:hover</code> al final de un selector para decir
+            "estos estilos solo se aplican cuando el usuario PASA EL MOUSE por encima".
+          </p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="sel">.boton</span> {
+  <span class="t">background</span>: blue;
+  <span class="t">color</span>: white;
+  <span class="t">padding</span>: <span class="n">12px 24px</span>;
+  <span class="t">border-radius</span>: <span class="n">8px</span>;
+
+  <span class="c">/* ← LA CLAVE: hace que el cambio sea SUAVE */</span>
+  <span class="t">transition</span>: <span class="t">all</span> <span class="n">0.3s</span> ease;
+}
+
+<span class="sel">.boton:hover</span> {
+  <span class="t">background</span>: red;
+  <span class="t">transform</span>: scale(<span class="n">1.1</span>);
+}</pre>
+        </div>
+
+        <div class="demo-box demo-box--vivo">
+          <p style="margin: 0 0 12px; font-size: 0.9rem;">Pasá el mouse sobre la tarjeta y el botón:</p>
+          <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+            <div class="demo-tarjeta">
+              <h3 style="margin: 0 0 6px;">🎯 Tarjeta</h3>
+              <p style="margin: 0; font-size: 0.85rem;">Pasá el mouse...</p>
+            </div>
+            <button class="demo-btn-fancy">Pasame el mouse</button>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>⏱️ La propiedad <code>transition</code></h3>
+          <p>Define cómo se hace el cambio (suave, rápido, lento, etc.). Tiene 4 valores:</p>
+          <ul>
+            <li><strong>Qué</strong> propiedad cambia: <code>all</code>, <code>color</code>, <code>transform</code>...</li>
+            <li><strong>Cuánto tarda</strong>: <code>0.3s</code>, <code>1s</code>, <code>500ms</code>...</li>
+            <li><strong>Curva</strong>: <code>ease</code>, <code>linear</code>, <code>ease-in</code>, <code>ease-out</code>.</li>
+            <li><strong>Delay</strong> (opcional): cuánto espera antes de empezar.</li>
+          </ul>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* Todos cambian con suavidad de 0.3 segundos */</span>
+<span class="sel">.tarjeta</span> {
+  <span class="t">transition</span>: <span class="t">all</span> <span class="n">0.3s</span> ease;
+}
+
+<span class="c">/* Solo el color cambia, en 0.5s, lentamente al final */</span>
+<span class="sel">.titulo</span> {
+  <span class="t">transition</span>: <span class="t">color</span> <span class="n">0.5s</span> ease-out;
+}
+
+<span class="c">/* Cambian dos cosas a la vez */</span>
+<span class="sel">.imagen</span> {
+  <span class="t">transition</span>: <span class="t">transform</span> <span class="n">0.4s</span>, <span class="t">opacity</span> <span class="n">0.6s</span>;
+}</pre>
+        </div>
+
+        <div class="info-box">
+          <h3>🎨 Ideas de efectos hover comunes</h3>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* 1. Cambiar de color */</span>
+<span class="sel">.btn:hover</span> { <span class="t">background</span>: red; }
+
+<span class="c">/* 2. Agrandar */</span>
+<span class="sel">.btn:hover</span> { <span class="t">transform</span>: scale(<span class="n">1.1</span>); }
+
+<span class="c">/* 3. Levantar */</span>
+<span class="sel">.btn:hover</span> { <span class="t">transform</span>: translateY(<span class="n">-4px</span>); }
+
+<span class="c">/* 4. Rotar */</span>
+<span class="sel">.btn:hover</span> { <span class="t">transform</span>: rotate(<span class="n">5deg</span>); }
+
+<span class="c">/* 5. Hacer transparente */</span>
+<span class="sel">.btn:hover</span> { <span class="t">opacity</span>: <span class="n">0.7</span>; }
+
+<span class="c">/* 6. Sombra que crece */</span>
+<span class="sel">.btn:hover</span> { <span class="t">box-shadow</span>: <span class="n">0 10px 20px</span> rgba(<span class="n">0</span>,<span class="n">0</span>,<span class="n">0</span>,<span class="n">0.2</span>); }</pre>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 8.1 · Botón premium</h4>
+          <p>Crear un botón que al pasarle el mouse: cambie de color, se agrande un 10%, se eleve 4px y le aparezca una sombra grande. Todo con una transición suave de 0.3s.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 9: Animaciones con keyframes
+    ====================================================================== -->
+    <section id="parte9" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">9</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Animaciones con @keyframes</h2>
+            <p class="stage-meta__sub">Movimiento real y continuo · 45 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🎬 ¿Diferencia entre transition y animation?</h3>
+          <ul>
+            <li><strong>Transition</strong> → cambio entre dos estados (necesita un trigger como <code>:hover</code>).</li>
+            <li><strong>Animation</strong> → secuencia que puede repetirse sola, sin trigger, con varios pasos.</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 Cómo se hace una animación</h3>
+          <ol>
+            <li>Definir los pasos con <code>@keyframes nombre { ... }</code>.</li>
+            <li>Aplicarla con <code>animation: nombre tiempo modo;</code> al elemento.</li>
+          </ol>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* 1. Definimos la animación */</span>
+<span class="k">@keyframes</span> <span class="sel">flotar</span> {
+  <span class="n">0%</span>   { <span class="t">transform</span>: translateY(<span class="n">0</span>); }
+  <span class="n">50%</span>  { <span class="t">transform</span>: translateY(<span class="n">-15px</span>); }
+  <span class="n">100%</span> { <span class="t">transform</span>: translateY(<span class="n">0</span>); }
+}
+
+<span class="c">/* 2. La aplicamos al elemento */</span>
+<span class="sel">.cajita</span> {
+  <span class="t">animation</span>: <span class="t">flotar</span> <span class="n">2s</span> ease-in-out infinite;
+  <span class="c">/*         nombre  duración  curva  cantidad */</span>
+}</pre>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 14px; font-size: 0.9rem;">Tres animaciones distintas corriendo en paralelo:</p>
+          <div class="demos-anim">
+            <figure>
+              <div class="anim-flota"></div>
+              <figcaption>flotar</figcaption>
+            </figure>
+            <figure>
+              <div class="anim-gira"></div>
+              <figcaption>girar</figcaption>
+            </figure>
+            <figure>
+              <div class="anim-late"></div>
+              <figcaption>latir</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>📋 Las 3 animaciones más útiles</h3>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* 1. APARECER (fade-in) - el clásico */</span>
+<span class="k">@keyframes</span> <span class="sel">aparecer</span> {
+  <span class="k">from</span> { <span class="t">opacity</span>: <span class="n">0</span>; <span class="t">transform</span>: translateY(<span class="n">20px</span>); }
+  <span class="k">to</span>   { <span class="t">opacity</span>: <span class="n">1</span>; <span class="t">transform</span>: translateY(<span class="n">0</span>); }
+}
+
+<span class="sel">h1</span> {
+  <span class="t">animation</span>: <span class="t">aparecer</span> <span class="n">1s</span> ease-out;
+}
+
+
+<span class="c">/* 2. GIRAR sin parar (loader) */</span>
+<span class="k">@keyframes</span> <span class="sel">girar</span> {
+  <span class="k">from</span> { <span class="t">transform</span>: rotate(<span class="n">0deg</span>); }
+  <span class="k">to</span>   { <span class="t">transform</span>: rotate(<span class="n">360deg</span>); }
+}
+
+<span class="sel">.loader</span> {
+  <span class="t">animation</span>: <span class="t">girar</span> <span class="n">1s</span> linear infinite;
+}
+
+
+<span class="c">/* 3. LATIR (corazón, notificación) */</span>
+<span class="k">@keyframes</span> <span class="sel">latir</span> {
+  <span class="n">0%, 100%</span> { <span class="t">transform</span>: scale(<span class="n">1</span>); }
+  <span class="n">50%</span>      { <span class="t">transform</span>: scale(<span class="n">1.2</span>); }
+}
+
+<span class="sel">.corazon</span> {
+  <span class="t">animation</span>: <span class="t">latir</span> <span class="n">1s</span> ease-in-out infinite;
+}</pre>
+        </div>
+
+        <div class="info-box">
+          <h3>📊 Valores de la propiedad <code>animation</code></h3>
+          <p>El orden es: <code>nombre / duración / curva / delay / cantidad / dirección</code>.</p>
+          <ul>
+            <li><strong>Cantidad</strong>: <code>1</code>, <code>3</code>, <code>infinite</code>...</li>
+            <li><strong>Curva</strong>: <code>linear</code>, <code>ease</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>.</li>
+            <li><strong>Dirección</strong>: <code>normal</code>, <code>reverse</code>, <code>alternate</code> (va y vuelve).</li>
+          </ul>
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 9.1 · Loader animado</h4>
+          <p>Crear un círculo (con <code>border-radius: 50%</code>) que tenga un borde de un solo lado de otro color y haga la animación de girar. Es el típico "spinner" de carga.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PARTE 10: Responsive
+    ====================================================================== -->
+    <section id="parte10" class="stage stage--tinted">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">10</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Responsive: que se vea bien en celular</h2>
+            <p class="stage-meta__sub">Media queries · 30 minutos</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>📱 ¿Qué es ser "responsive"?</h3>
+          <p>
+            Que tu sitio se adapte a distintos tamaños de pantalla: PC, tablet, celular.
+            Hoy más de la mitad del tráfico web es desde celular, así que es <strong>obligatorio</strong>.
+          </p>
+        </div>
+
+        <div class="info-box">
+          <h3>🎯 Las dos reglas de oro</h3>
+          <p>
+            <strong>1.</strong> Poné esta línea en el <code>&lt;head&gt;</code> de tu HTML (sin ella, nada va a funcionar bien en celular):
+          </p>
+        </div>
+
+        <div class="code" data-file="index.html">
+<pre><span class="k">&lt;meta</span> <span class="a">name</span>=<span class="s">"viewport"</span>
+      <span class="a">content</span>=<span class="s">"width=device-width, initial-scale=1.0"</span><span class="k">&gt;</span></pre>
+        </div>
+
+        <div class="info-box">
+          <p>
+            <strong>2.</strong> Usá <strong>media queries</strong> en tu CSS para cambiar los estilos
+            según el tamaño de pantalla.
+          </p>
+        </div>
+
+        <div class="code" data-file="estilos.css">
+<pre><span class="c">/* Estilos base (PC) */</span>
+<span class="sel">.galeria</span> {
+  <span class="t">display</span>: grid;
+  <span class="t">grid-template-columns</span>: <span class="t">repeat</span>(<span class="n">4</span>, <span class="n">1fr</span>);  <span class="c">/* 4 columnas */</span>
+  <span class="t">gap</span>: <span class="n">20px</span>;
+}
+
+<span class="sel">h1</span> {
+  <span class="t">font-size</span>: <span class="n">48px</span>;
+}
+
+<span class="c">/* === MEDIA QUERY: cuando la pantalla es chica (max 768px = tablet) === */</span>
+<span class="k">@media</span> (<span class="t">max-width</span>: <span class="n">768px</span>) {
+  <span class="sel">.galeria</span> {
+    <span class="t">grid-template-columns</span>: <span class="t">repeat</span>(<span class="n">2</span>, <span class="n">1fr</span>);   <span class="c">/* 2 columnas */</span>
+  }
+  <span class="sel">h1</span> {
+    <span class="t">font-size</span>: <span class="n">32px</span>;
+  }
+}
+
+<span class="c">/* === Para celular (max 480px) === */</span>
+<span class="k">@media</span> (<span class="t">max-width</span>: <span class="n">480px</span>) {
+  <span class="sel">.galeria</span> {
+    <span class="t">grid-template-columns</span>: <span class="n">1fr</span>;   <span class="c">/* 1 sola columna */</span>
+  }
+  <span class="sel">h1</span> {
+    <span class="t">font-size</span>: <span class="n">24px</span>;
+  }
+}</pre>
+        </div>
+
+        <div class="demo-box">
+          <p style="margin: 0 0 12px; font-size: 0.9rem;">
+            <strong>Probá redimensionar la ventana del navegador</strong> (achicala). Cuando pase de 700px de ancho, las cajas se ponen en una sola columna:
+          </p>
+          <div class="demo-responsive">
+            <div class="demo-responsive__grid">
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>📏 Los breakpoints más usados</h3>
+          <ul>
+            <li><code>max-width: 480px</code> → celular.</li>
+            <li><code>max-width: 768px</code> → tablet.</li>
+            <li><code>max-width: 1024px</code> → laptop chica.</li>
+            <li><code>min-width: 1200px</code> → pantalla grande.</li>
+          </ul>
+        </div>
+
+        <div class="tip">
+          <strong>💡 Tip de profesional:</strong> en el navegador, apretá <strong>F12</strong> y después el ícono de celular/tablet (arriba a la izquierda). Te deja simular distintos dispositivos sin moverte de la silla.
+        </div>
+
+        <div class="exercise">
+          <h4>📝 Ejercicio 10.1</h4>
+          <p>Tomar la galería del ejercicio 7.1 y hacer que en pantallas menores a 768px se vea con 2 columnas, y en menores a 480px con 1 sola columna. Usar media queries.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         ENTREGA / Proyecto final
+    ====================================================================== -->
+    <section id="entrega" class="stage">
+      <div class="stage__inner">
+        <div class="stage-header">
+          <div class="stage-number">🎯</div>
+          <div class="stage-meta">
+            <h2 class="stage-meta__title">Proyecto final integrador</h2>
+            <p class="stage-meta__sub">Juntá todo lo aprendido en una sola página</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>🚀 La consigna</h3>
+          <p>
+            Crear UNA sola página HTML con un archivo <code>estilos.css</code> aparte que combine
+            <strong>al menos 6</strong> de los temas vistos. Algunas ideas:
+          </p>
+
+          <h3>💡 Ideas de proyectos</h3>
+          <ul>
+            <li>
+              <strong>Tarjeta de presentación digital:</strong> tu foto, nombre, profesión, redes sociales,
+              con animación de aparición al cargar y efecto hover en los iconos.
+            </li>
+            <li>
+              <strong>Landing page de producto:</strong> hero con degradado, sección de beneficios con grid,
+              testimonios y un CTA al final. Todo responsive.
+            </li>
+            <li>
+              <strong>Menú de restaurante:</strong> grid de platos con imagen, precio y descripción.
+              Hover que agrande la tarjeta y le ponga sombra.
+            </li>
+            <li>
+              <strong>Galería de viajes:</strong> 9 fotos en grid responsive, cada una con un overlay
+              con el nombre del lugar al pasar el mouse.
+            </li>
+            <li>
+              <strong>Dashboard simple:</strong> 4 tarjetas de estadísticas en grid, con números grandes
+              y íconos. Animación de aparición al cargar.
+            </li>
+          </ul>
+        </div>
+
+        <div class="checklist">
+          <h3>✅ Checklist final</h3>
+          <ul>
+            <li>Tu proyecto usa al menos 6 de los 10 temas vistos.</li>
+            <li>Tenés un archivo <code>estilos.css</code> separado del HTML.</li>
+            <li>Usás clases (<code>.</code>) y al menos un id (<code>#</code>) correctamente.</li>
+            <li>Aplicaste color, tipografía y box model.</li>
+            <li>Usaste flexbox y/o grid para el layout.</li>
+            <li>Tenés al menos un efecto hover con transición suave.</li>
+            <li>Tenés al menos una animación con <code>@keyframes</code>.</li>
+            <li>El sitio se ve bien en celular (con media queries).</li>
+            <li>El meta viewport está en el <code>&lt;head&gt;</code>.</li>
+            <li>Los nombres de archivo van en minúscula y sin espacios.</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h3>📦 Cómo entregar</h3>
+          <p>Solo comprimí la carpeta del proyecto en un archivo <code>.zip</code> y mandásela a tu profesora <strong>Rosana</strong>. ¡Listo! 🎉</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>CSS de a poco · una guía para hacer páginas que se vean lindas</p>
+    <p>El secreto es: probá un valor, mirá qué pasa, ajustá. 🎨</p>
+  </footer>
+
+  <script>
+    // Botones COPIAR
+    document.querySelectorAll(".btn-copy").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = document.getElementById(btn.dataset.target);
+        if (!target) return;
+        navigator.clipboard.writeText(target.textContent).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = "✓ Copiado";
+          btn.classList.add("ok");
+          setTimeout(() => {
+            btn.textContent = orig;
+            btn.classList.remove("ok");
+          }, 1500);
+        });
+      });
+    });
+
+    // Scroll suave en la nav
+    document.querySelectorAll(".nav a").forEach(link => {
+      link.addEventListener("click", e => {
+        const t = document.querySelector(link.getAttribute("href"));
+        if (t) {
+          e.preventDefault();
+          t.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
